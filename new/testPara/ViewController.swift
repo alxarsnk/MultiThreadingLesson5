@@ -15,15 +15,10 @@ class ViewController: UIViewController {
     var model: Post!
     override func viewDidLoad() {
         super.viewDidLoad()
+       newlabel.text = model.textPost
         newimg.image = model.imagePost
-        newlabel.text = model.textPost
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
+  
 }
 

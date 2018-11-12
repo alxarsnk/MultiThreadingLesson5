@@ -19,6 +19,9 @@ class CustomTableViewCell: UITableViewCell {
     @IBAction func shareButton(_ sender: Any) {
         delegate?.didPressInfoButton()
     }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
     func configureCell (with image: UIImage, nameString: String, delegate: CustomCellDelegate) {
         imagePost.image = image
         postNameLabel.text = nameString
