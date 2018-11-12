@@ -16,8 +16,11 @@ struct Post{
     var dataManager: DataStorage = DataStorage()
     var sum = dataManager.ObtainRandomPhoto()
 
+
+
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomCellDelegate {
     
+    var photo = #imageLiteral(resourceName: "post3")
     
     /// реализация pulltoupdate
     lazy var refresher: UIRefreshControl = {
@@ -28,8 +31,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return refreshConrol
     }()
     var dataArray: [Post] = []
+    
     @IBOutlet weak var tableView: UITableView!
 
+    /// Сохранение данных и их печать
+    ///
+    /// - Parameter sender: <#sender description#>
+    @IBAction func saveDataButton(_ sender: Any) {
+        dataManager.asyncSaveData { [unowned self](postArray) in
+            self.dataArray=postArray
+        }
+    }
+    
+    @IBAction func searchButton(_ sender: Any) {
+        dataManager.asyncSearchData(str: "2") { [unowned self](postArray) in
+            self.dataArray=postArray
+        }
+    }
     /// То что просиходит при свайпе вниз(обновление данных)
     @objc func requestData() {
         let count = dataArray.count
@@ -60,9 +78,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.endUpdates()
     }
     
-    //var dataManager: DataStorage = DataStorage()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = editButtonItem
@@ -74,9 +89,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.dataArray = postArray
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-            }
+        }
     }
 }
+    
     /// Кол-во ячеек в секции
     ///
     /// - Parameters:
@@ -93,14 +109,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///   - tableView: Наша таблица
     ///   - indexPath: Индекс настраевомемой ячейки
     /// - Returns: Ячейку возвращаем отредактируемую
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-        let posts = dataArray[indexPath.row]
-        
-        cell.configureCell(with: dataManager.ObtainRandomPhoto(), nameString: dataManager.ObtainRandomName(), delegate: self)
-        
+        cell.configureCell(with:dataManager.ObtainRandomPhoto() , nameString: dataManager.ObtainRandomName(), delegate: self)
         return cell
+        
     }
     /// Связь вьюх
     ///
@@ -108,17 +122,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///   - segue: идентификатор
     ///   - sender: <#sender description#>
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "detailSegue", let model = sender as? Post {
-            
             let destinationController = segue.destination as! ViewController
             destinationController.model = model
         }
     }
     /// Нажатие кнопки, открытие новой вьюхи
     func didPressInfoButton() {
-        
-        let model = Post(imagePost: dataManager.ObtainRandomPhoto() , textPost: dataManager.ObtainRandomName())
+    
+       let model = Post(imagePost: dataManager.ObtainRandomPhoto(), textPost: dataManager.ObtainRandomName())
         
         performSegue(withIdentifier: "detailSegue", sender: model)
     }
@@ -144,13 +156,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///   - indexPath: Индекс удаляемой ячейки
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            dataArray.remove(at: indexPath.row)
-            
+             dataArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
         }
-    
     }
     /// Возможность двигать ячейки
     ///
@@ -162,8 +170,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         dataArray.swapAt(sourceIndexPath.row, destinationIndexPath.row)
         tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
     }
-
-  }
+}
 
 
 

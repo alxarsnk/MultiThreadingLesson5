@@ -78,11 +78,41 @@
                         <viewLayoutGuide key="safeArea" id="Hom-q3-tT7"/>
                     </view>
                     <navigationItem key="navigationItem" id="LF3-jB-6ef">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="dte-FY-hAg">
-                            <connections>
-                                <action selector="addButtonPressed:" destination="g2z-Jo-Mki" id="Oed-rH-JPU"/>
-                            </connections>
-                        </barButtonItem>
+                        <nil key="title"/>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="add" id="dte-FY-hAg">
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="g2z-Jo-Mki" id="Oed-rH-JPU"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="lm9-1g-1JS">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wGk-3M-oXh">
+                                    <rect key="frame" x="52.5" y="7" width="48" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Search">
+                                        <color key="titleColor" red="1" green="0.155123493" blue="0.1735941157" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="searchButton:" destination="g2z-Jo-Mki" eventType="touchUpInside" id="8i4-61-EEn"/>
+                                    </connections>
+                                </button>
+                                <connections>
+                                    <action selector="searchButton:" destination="g2z-Jo-Mki" id="IAw-H6-8gP"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="b4H-q4-epm">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pSo-oK-hlj">
+                                    <rect key="frame" x="108.5" y="7" width="65" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="SaveData">
+                                        <color key="titleColor" red="0.26168416073519801" green="0.66666668653488159" blue="0.17131668583410012" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="saveDataButton:" destination="g2z-Jo-Mki" eventType="touchUpInside" id="JbD-1p-gMJ"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Kbw-Yp-neF" id="BsX-ud-UIL"/>
